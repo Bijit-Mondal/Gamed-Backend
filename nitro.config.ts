@@ -12,5 +12,8 @@ export default defineNitroConfig({
         theme: 'yellow'
       }
     }
+  },
+  routeRules:{
+    '/api/**': { cors: true, headers: {'access-control-allow-methods': 'GET,POST,OPTIONS,PUT,DELETE,PATCH','access-control-allow-origin':'http://localhost:5173','access-control-allow-headers':'Content-Type,Authorization' } },
   }
 });
