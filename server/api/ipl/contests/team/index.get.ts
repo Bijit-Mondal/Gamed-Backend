@@ -41,87 +41,13 @@ export default defineEventHandler(async (event) => {
 
     const team = teamDetails[0];
 
-    // Get matches for this team (as either home or away team)
-    const matchDetails = await db
-      .select({
-        matchId: matches.matchId,
-        homeTeamId: matches.homeTeamId,
-        awayTeamId: matches.awayTeamId,
-        matchDate: matches.matchDate,
-        matchStatus: matches.matchStatus,
-        venue: matches.venue,
-      })
-      .from(matches)
-      .where(
-        sql`${matches.homeTeamId} = ${teamId} OR ${matches.awayTeamId} = ${teamId}`
-      )
-      .orderBy(matches.matchDate);
-
-    // Get squad players for this team using proper join syntax with the squad table
-    const teamPlayers = await db
-      .select({
-        playerId: players.playerId,
-        playerName: players.fullName,
-        playerType: players.playerType,
-        country: players.country,
-        battingStyle: players.battingStyle,
-        bowlingStyle: players.bowlingStyle,
-        creditValue: players.baseCreditValue,
-      })
-      .from(players)
-      .innerJoin(squad, eq(players.playerId, squad.playerId))
-      .where(
-        and(
-          eq(squad.teamId, teamId),
-          eq(squad.isActive, true)
-        )
-      );
-
-    if (!teamPlayers.length) {
-      // Return team info without players if no players found
       return {
         success: true,
         data: {
           team,
-          matches: matchDetails,
-          players: {
-            count: 0,
-            all: []
-          }
         },
       };
-    }
-
-    // Group players by player type for better organization
-    const groupedPlayers = teamPlayers.reduce((result, player) => {
-      const type = player.playerType;
-      if (!result[type]) {
-        result[type] = [];
-      }
-      result[type].push(player);
-      return result;
-    }, {} as Record<string, typeof teamPlayers>);
-
-    // Ensure all player types are present in the response
-    const playerTypes = ["BATSMAN", "BOWLER", "ALL_ROUNDER", "WICKET_KEEPER"];
-    const groupedResult: Record<string, any[]> = {};
     
-    playerTypes.forEach(type => {
-      groupedResult[type] = groupedPlayers[type] || [];
-    });
-
-    return {
-      success: true,
-      data: {
-        team,
-        matches: matchDetails,
-        players: {
-          count: teamPlayers.length,
-          byType: groupedResult,
-          all: teamPlayers
-        }
-      },
-    };
   } catch (error: any) {
     console.error("Error fetching team details:", error);
     

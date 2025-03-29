@@ -2,11 +2,27 @@ import { defineEventHandler } from "h3";
 import { and, eq, gte } from "drizzle-orm";
 import { db } from "../../../../db";
 import { matches, teams } from "../../../../db/schema";
+import { sql } from "drizzle-orm";
 
 export default defineEventHandler(async () => {
   try {
     // Get current date in ISO format
     const currentDate = new Date().toISOString();
+
+
+    const allMatches = await db
+      .select({
+        matchId: matches.matchId,
+        homeTeamId: matches.homeTeamId,
+        awayTeamId: matches.awayTeamId,
+        matchDate: matches.matchDate,
+        venue: matches.venue,
+        matchStatus: matches.matchStatus,
+        matchType: matches.matchType,
+      })
+      .from(matches);
+
+    console.log(allMatches);
 
     // Fetch all upcoming matches
     const upcomingMatches = await db
@@ -22,8 +38,7 @@ export default defineEventHandler(async () => {
       .from(matches)
       .where(
         and(
-          eq(matches.matchStatus, "UPCOMING"),
-          gte(matches.matchDate, currentDate)
+          eq(matches.matchStatus, "UPCOMING")
         )
       )
       .orderBy(matches.matchDate);
@@ -57,7 +72,7 @@ export default defineEventHandler(async () => {
       })
       .from(teams)
       .where(
-        teams.teamId.in(teamIds)
+        sql`${teams.teamId} IN (${teamIds.join(',')})`
       );
 
     // Create a map of team ID to team details for easy lookup
