@@ -11,7 +11,9 @@
     "db:studio": "drizzle-kit studio --port=9169",
     "db:seed-contest": "bun run server/db/seed/contests.seed.ts",
     "db:seed-user": "bun run server/db/seed/users.seed.ts",
-    "db:seed-team": "bun run server/db/seed/team.seed.ts"
+    "db:seed-team": "bun run server/db/seed/team.seed.ts",
+    "db:seed-enrollment": "bun run server/db/seed/enroll-contest.seed.ts",
+    "db:seed-all": "bun run db:seed-user && bun run db:seed-contest && bun run db:seed-team && bun run db:seed-enrollment"
   },
   "devDependencies": {
     "drizzle-kit": "^0.30.2",
