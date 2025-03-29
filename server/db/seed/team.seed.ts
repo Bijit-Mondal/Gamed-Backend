@@ -132,7 +132,7 @@ export async function seedTeams() {
         // Create team entry
         await db.insert(userTeams).values({
           teamId,
-          userId: user.id,
+          userId: parseInt(user.id.toString()), // Convert to integer explicitly
           matchId,
           contestId: selectedContest.contestId, // Make sure to set the contestId
           teamName,

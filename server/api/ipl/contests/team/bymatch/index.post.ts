@@ -1,7 +1,8 @@
 import { and, eq, sql } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "../../../../db";
-import { contests, matches, players, squad, teams, userTeamPlayers, userTeams } from "../../../../db/schema";
+import { defineEventHandler, readBody } from "h3";
+import { db } from "../../../../../db";
+import { contests, matches, players, squad, teams, userTeamPlayers, userTeams, contestEnrollments } from "../../../../../db/schema";
 import { z } from "zod";
 
 // Validation schema for fantasy team creation
@@ -210,15 +211,43 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Enroll the team in the contest
+    const enrollmentId = uuidv4();
+    await db.insert(contestEnrollments).values({
+      enrollmentId,
+      contestId: teamData.contestId,
+      userTeamId: teamId,
+      userId: teamData.userId,
+      enrollmentTime: new Date().toISOString(),
+      status: "ACTIVE",
+    });
+
+    // Update the filledSpots counter in the contest
+    const contest = await db
+      .select({ filledSpots: contests.filledSpots })
+      .from(contests)
+      .where(eq(contests.contestId, teamData.contestId))
+      .limit(1);
+    
+    const currentFilledSpots = contest[0]?.filledSpots || 0;
+    
+    await db
+      .update(contests)
+      .set({
+        filledSpots: currentFilledSpots + 1,
+      })
+      .where(eq(contests.contestId, teamData.contestId));
+
     return {
       success: true,
-      message: "Team created successfully",
+      message: "Team created successfully and enrolled in contest",
       data: {
         teamId,
         teamName: teamData.teamName,
         matchId: teamData.matchId,
         contestId: teamData.contestId,
         playerCount: teamData.players.length,
+        enrollmentId,
       },
     };
   } catch (error: any) {
