@@ -27,6 +27,7 @@
     "drizzle-seed": "^0.3.1",
     "drizzle-zod": "^0.6.1",
     "jwks-rsa": "^3.1.0",
+    "nanoid": "^5.1.5",
     "supertokens-node": "21.1.0",
     "uuid": "^11.1.0"
   }
