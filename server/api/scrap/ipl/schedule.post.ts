@@ -118,27 +118,46 @@ export default defineEventHandler(async (event) => {
           ? new Date(parseInt(dateElement.attr('timestamp') || '0')).toISOString()
           : new Date().toISOString();
         
-        // Determine match status
+        // Determine match status - Improved status detection logic
         let matchStatus: "UPCOMING" | "LIVE" | "COMPLETED" | "CANCELED" = "UPCOMING";
-        const statusElement = matchElement.find('.cb-text-complete');
         
-        if (statusElement.length) {
-          const statusText = statusElement.text().toLowerCase();
-          
-          if (statusText.includes('won')) {
-            matchStatus = "COMPLETED";
-          } else if (statusText.includes('opt') || statusText.includes('live')) {
-            matchStatus = "LIVE";
-          } else if (statusText.includes('cancel')) {
-            matchStatus = "CANCELED";
-          }
+        // Find status elements
+        const statusCompleteElement = matchElement.find('.cb-text-complete');
+        const statusInProgressElement = matchElement.find('.cb-text-inprogress');
+        const statusPreviewElement = matchElement.find('.cb-text-preview');
+        const statusUpcomingElement = matchElement.find('.cb-text-upcoming');
+        
+        // Get status texts
+        const completeText = statusCompleteElement.length ? statusCompleteElement.text().toLowerCase() : '';
+        const inProgressText = statusInProgressElement.length ? statusInProgressElement.text().toLowerCase() : '';
+        const combinedStatusText = `${completeText} ${inProgressText}`.toLowerCase();
+        
+        // Log status texts for debugging
+        console.log(`Match ${matchId} status texts:`, { 
+          complete: completeText,
+          inProgress: inProgressText,
+          hasCompleteElement: statusCompleteElement.length > 0,
+          hasInProgressElement: statusInProgressElement.length > 0
+        });
+        
+        // Determine status based on text and elements present
+        if (combinedStatusText.includes('won') || completeText.includes('won')) {
+          matchStatus = "COMPLETED";
+        } else if (inProgressText.includes('live') || combinedStatusText.includes('live') || 
+                  inProgressText.includes('opt to') || combinedStatusText.includes('opt to') ||
+                  statusInProgressElement.length > 0) {
+          matchStatus = "LIVE";
+        } else if (combinedStatusText.includes('cancel')) {
+          matchStatus = "CANCELED";
+        } else if (statusPreviewElement.length > 0 || statusUpcomingElement.length > 0) {
+          matchStatus = "UPCOMING";
         }
         
         // Check if there's a winning team (if the match is completed)
         let winningTeamId: string | null = null;
         
         if (matchStatus === "COMPLETED") {
-          const resultText = statusElement.text();
+          const resultText = statusCompleteElement.text();
           
           // Check which team won
           if (resultText.includes(homeTeamName) || resultText.toLowerCase().includes(homeTeamName.toLowerCase())) {
