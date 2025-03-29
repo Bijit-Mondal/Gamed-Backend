@@ -1,7 +1,7 @@
 import { createSelectSchema, createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
-import { users, players, teams, squad, matches, contests } from './schema';
+import { users, players, teams, squad, matches, contests, userTeams, userTeamPlayers } from './schema';
 
 export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
@@ -50,3 +50,19 @@ export const updateContestSchema = createUpdateSchema(contests);
 export type TInsertContest = z.infer<typeof insertContestSchema>;
 export type TSelectContest = z.infer<typeof selectContestSchema>;
 export type TUpdateContest = z.infer<typeof updateContestSchema>;
+
+export const insertUserTeamSchema = createInsertSchema(userTeams);
+export const selectUserTeamSchema = createSelectSchema(userTeams);
+export const updateUserTeamSchema = createUpdateSchema(userTeams);
+
+export type TInsertUserTeam = z.infer<typeof insertUserTeamSchema>;
+export type TSelectUserTeam = z.infer<typeof selectUserTeamSchema>;
+export type TUpdateUserTeam = z.infer<typeof updateUserTeamSchema>;
+
+export const insertUserTeamPlayerSchema = createInsertSchema(userTeamPlayers);
+export const selectUserTeamPlayerSchema = createSelectSchema(userTeamPlayers);
+export const updateUserTeamPlayerSchema = createUpdateSchema(userTeamPlayers);
+
+export type TInsertUserTeamPlayer = z.infer<typeof insertUserTeamPlayerSchema>;
+export type TSelectUserTeamPlayer = z.infer<typeof selectUserTeamPlayerSchema>;
+export type TUpdateUserTeamPlayer = z.infer<typeof updateUserTeamPlayerSchema>;
