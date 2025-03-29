@@ -10,7 +10,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio --port=9169",
     "db:seed-contest": "bun run server/db/seed/contests.seed.ts",
-    "db:seed-user": "bun run server/db/seed/users.seed.ts"
+    "db:seed-user": "bun run server/db/seed/users.seed.ts",
+    "db:seed-team": "bun run server/db/seed/team.seed.ts"
   },
   "devDependencies": {
     "drizzle-kit": "^0.30.2",

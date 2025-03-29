@@ -8,6 +8,13 @@
       "when": 1743156464066,
       "tag": "0000_nervous_warhawk",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1743239439962,
+      "tag": "0001_condemned_ghost_rider",
+      "breakpoints": true
     }
   ]
 }

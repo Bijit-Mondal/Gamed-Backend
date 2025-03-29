@@ -93,6 +93,21 @@ export const userTeams = table("gamezy_user_teams", {
   createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
 });
 
+export const contestEnrollments = table("gamezy_contest_enrollments", {
+  enrollmentId: text("enrollment_id").primaryKey(),
+  contestId: text("contest_id").references(() => contests.contestId).notNull(),
+  userTeamId: text("user_team_id").references(() => userTeams.teamId).notNull(),
+  userId: text("user_id").references(() => users.id).notNull(),
+  enrollmentTime: text("enrollment_time").notNull().default(sql`CURRENT_TIMESTAMP`),
+  rank: integer("rank"),
+  winnings: text("winnings"),
+  status: text("status", { enum: ["ACTIVE", "CANCELED"] }).notNull().default("ACTIVE"),
+}, (enrollment) => {
+  return {
+    uniqueEnrollment: uniqueIndex("unique_enrollment_idx").on(enrollment.contestId, enrollment.userTeamId),
+  };
+});
+
 export const userTeamPlayers = table("gamezy_user_team_players", {
   userTeamId: text("user_team_id").references(() => userTeams.teamId),
   playerId: text("player_id").references(() => players.playerId),
