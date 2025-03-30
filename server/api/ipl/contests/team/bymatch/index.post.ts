@@ -81,84 +81,90 @@ export default defineEventHandler(async (event) => {
 
     // Get the match details to check home and away teams
     const match = matchExists[0];
+
+    console.log("Match Details:", match);
     
     // Validate the players selected
     const playerIds = teamData.players.map((player) => player.playerId);
+
+    console.log("Player IDs:", playerIds);
     
     // Check if all players exist and are in active squads for the match teams
-    const selectedPlayers = await db
-      .select({
-        player: {
-          id: players.playerId,
-          type: players.playerType,
-        },
-        teamId: squad.teamId,
-      })
-      .from(players)
-      .innerJoin(squad, eq(players.playerId, squad.playerId))
-      .where(
-        and(
-          sql`${players.playerId} IN (${playerIds.join(',')})`,
-          sql`${squad.teamId} IN (${match.homeTeamId}, ${match.awayTeamId})`,
-          eq(squad.isActive, true)
-        )
-      );
+    // const selectedPlayers = await db
+    //   .select({
+    //     player: {
+    //       id: players.playerId,
+    //       // type: players.playerType,
+    //     },
+    //     teamId: squad.teamId,
+    //   })
+    //   .from(players)
+    //   .innerJoin(squad, eq(players.playerId, squad.playerId))
+    //   .where(
+    //     and(
+    //       sql`${players.playerId} IN (${playerIds.join(', ')})`,
+    //       sql`${squad.teamId} IN (${match.homeTeamId}, ${match.awayTeamId})`,
+    //       eq(squad.isActive, true)
+    //     )
+    //   );
 
-    // Check if all 11 players were found
-    if (selectedPlayers.length !== 11) {
-      return {
-        success: false,
-        message: "One or more players are not valid for this match",
-      };
-    }
+    //   console.log("Selected Players:", selectedPlayers);
+
+    // // Check if all 11 players were found
+    // if (selectedPlayers.length !== 11) {
+    //   return {
+    //     success: false,
+    //     message: "One or more players are not valid for this match",
+    //   };
+    // }
 
     // Count players by team
-    const playersByTeam: Record<string, number> = {};
-    selectedPlayers.forEach((p) => {
-      playersByTeam[p.teamId] = (playersByTeam[p.teamId] || 0) + 1;
-    });
+    // const playersByTeam: Record<string, number> = {};
+    // selectedPlayers.forEach((p) => {
+    //   playersByTeam[p.teamId] = (playersByTeam[p.teamId] || 0) + 1;
+    // });
 
-    // Check if we have a valid distribution from both teams (max 6 from one team, min 5 from other)
-    const teamIds = Object.keys(playersByTeam);
-    if (
-      teamIds.length !== 2 || 
-      playersByTeam[teamIds[0]] > 6 || 
-      playersByTeam[teamIds[1]] > 6 ||
-      playersByTeam[teamIds[0]] < 5 || 
-      playersByTeam[teamIds[1]] < 5
-    ) {
-      return {
-        success: false,
-        message: "Invalid team distribution. You must select at least 5 and at most 6 players from each team.",
-      };
-    }
+    // // Check if we have a valid distribution from both teams (max 6 from one team, min 5 from other)
+    // const teamIds = Object.keys(playersByTeam);
+    // if (
+    //   teamIds.length !== 2 || 
+    //   playersByTeam[teamIds[0]] > 6 || 
+    //   playersByTeam[teamIds[1]] > 6 ||
+    //   playersByTeam[teamIds[0]] < 5 || 
+    //   playersByTeam[teamIds[1]] < 5
+    // ) {
+    //   return {
+    //     success: false,
+    //     message: "Invalid team distribution. You must select at least 5 and at most 6 players from each team.",
+    //   };
+    // }
 
-    // Count players by type
-    const playersByType: Record<string, number> = {};
-    selectedPlayers.forEach((p) => {
-      playersByType[p.player.type] = (playersByType[p.player.type] || 0) + 1;
-    });
+    // // Count players by type
+    // const playersByType: Record<string, number> = {};
+    // selectedPlayers.forEach((p) => {
+    //   playersByType[p.player.type] = (playersByType[p.player.type] || 0) + 1;
+    // });
 
     // Check if we have at least one player of each type
-    const requiredTypes = ["BATSMAN", "BOWLER", "ALL_ROUNDER", "WICKET_KEEPER"];
-    const missingTypes = requiredTypes.filter(type => !playersByType[type] || playersByType[type] < 1);
+    // const requiredTypes = ["BATSMAN", "BOWLER", "ALL_ROUNDER", "WICKET_KEEPER"];
+    // const missingTypes = requiredTypes.filter(type => !playersByType[type] || playersByType[type] < 1);
     
-    if (missingTypes.length > 0) {
-      return {
-        success: false,
-        message: `Missing required player types: ${missingTypes.join(", ")}. Your team must include at least 1 of each type.`,
-      };
-    }
+    // if (missingTypes.length > 0) {
+    //   return {
+    //     success: false,
+    //     message: `Missing required player types: ${missingTypes.join(", ")}. Your team must include at least 1 of each type.`,
+    //   };
+    // }
 
     // Check if any player type exceeds the maximum of 5
-    for (const type of requiredTypes) {
-      if (playersByType[type] > 5) {
-        return {
-          success: false,
-          message: `Too many ${type} players. Maximum allowed is 5.`,
-        };
-      }
-    }
+    // for (const type of requiredTypes) {
+    //   if (playersByType[type] > 5) {
+    //     return {
+    //       success: false,
+    //       message: `Too many ${type} players. Maximum allowed is 5.`,
+    //     };
+    //   }
+    // }
 
     // Validate captain and vice-captain
     const captainCount = teamData.players.filter(p => p.isCaptain).length;
@@ -213,7 +219,7 @@ export default defineEventHandler(async (event) => {
 
     // Enroll the team in the contest
     const enrollmentId = uuidv4();
-    await db.insert(contestEnrollments).values({
+    let res = await db.insert(contestEnrollments).values({
       enrollmentId,
       contestId: teamData.contestId,
       userTeamId: teamId,
@@ -221,6 +227,20 @@ export default defineEventHandler(async (event) => {
       enrollmentTime: new Date().toISOString(),
       status: "ACTIVE",
     });
+    console.log(res, "res")
+
+    let s = await db.select({
+      enrollmentId: contestEnrollments.enrollmentId,
+      contestId: contestEnrollments.contestId,
+      userTeamId: contestEnrollments.userTeamId,
+      userId: contestEnrollments.userId,
+      enrollmentTime: contestEnrollments.enrollmentTime,
+      status: contestEnrollments.status,
+    }).from(contestEnrollments).where(
+      eq(contestEnrollments.enrollmentId, enrollmentId)
+    );
+    console.log(s, "s")
+    // Check if the enrollment was successful
 
     // Update the filledSpots counter in the contest
     const contest = await db
@@ -228,6 +248,7 @@ export default defineEventHandler(async (event) => {
       .from(contests)
       .where(eq(contests.contestId, teamData.contestId))
       .limit(1);
+
     
     const currentFilledSpots = contest[0]?.filledSpots || 0;
     

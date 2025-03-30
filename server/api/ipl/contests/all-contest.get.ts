@@ -17,18 +17,18 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check if user exists
-    const userExists = await db
-      .select({ id: users.id })
-      .from(users)
-      .where(eq(users.id, parseInt(userId)))
-      .limit(1);
+    // const userExists = await db
+    //   .select({ id: users.id })
+    //   .from(users)
+    //   .where(eq(users.id, parseInt(userId)))
+    //   .limit(1);
 
-    if (!userExists.length) {
-      return {
-        success: false,
-        message: "User not found",
-      };
-    }
+    // if (!userExists.length) {
+    //   return {
+    //     success: false,
+    //     message: "User not found",
+    //   };
+    // }
 
     // Get all contest enrollments for the user with contest, match and team details
     const userContests = await db
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       .innerJoin(contests, eq(contestEnrollments.contestId, contests.contestId))
       .innerJoin(matches, eq(contests.matchId, matches.matchId))
       .innerJoin(userTeams, eq(contestEnrollments.userTeamId, userTeams.teamId))
-      .where(eq(contestEnrollments.userId, parseInt(userId)))
+      .where(eq(contestEnrollments.userId, (userId)))
       .orderBy(desc(contests.startTime));
 
     // Group contests by status (UPCOMING, LIVE, COMPLETED)
