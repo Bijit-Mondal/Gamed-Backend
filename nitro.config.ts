@@ -8,7 +8,8 @@ export default defineNitroConfig({
   },
   scheduledTasks: {
     // Run fantasy tasks every minute
-     '* * * * *': ['fantasy:update-points', 'fantasy:update-points-scorecard']
+    //  '* * * * *': ['fantasy:update-points', 'fantasy:update-points-scorecard']
+     '* * * * *': ['fantasy:update-points']
   },
   openAPI: {
     ui: {
@@ -17,5 +18,9 @@ export default defineNitroConfig({
         theme: 'yellow'
       }
     }
+  },
+  output: {
+    dir: '.output',
+    publicDir: 'dist'
   }
 });
