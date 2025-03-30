@@ -20,7 +20,8 @@ export default defineNitroConfig({
     }
   },
   output: {
-    dir: '.output',
-    publicDir: 'dist'
+    dir: 'dist',
+    publicDir: 'dist/public',
+    serverDir: 'dist/server'
   }
 });
