@@ -1,0 +1,174 @@
+{
+  "player_name": "Virat Kohli Recent Matches",
+  "total_matches": 10,
+  "total_runs": 371,
+  "batting_average": 46.38,
+  "highest_score": "100* vs Pakistan vs India (2025-02-23)",
+  "centuries": 1,
+  "half_centuries": 3,
+  "recent_form": [
+    "31",
+    "59*",
+    "1",
+    "84",
+    "11"
+  ],
+  "formats": {
+    "T20s": {
+      "matches": 2,
+      "innings": 2,
+      "runs": 90,
+      "balls": 66,
+      "centuries": 0,
+      "half_centuries": 1,
+      "not_outs": 1,
+      "average": 90.0,
+      "strike_rate": 136.36
+    },
+    "ODI": {
+      "matches": 7,
+      "innings": 7,
+      "runs": 275,
+      "balls": 326,
+      "centuries": 1,
+      "half_centuries": 2,
+      "not_outs": 1,
+      "average": 45.83,
+      "strike_rate": 84.36
+    },
+    "First-class": {
+      "matches": 1,
+      "innings": 1,
+      "runs": 6,
+      "balls": 15,
+      "centuries": 0,
+      "half_centuries": 0,
+      "not_outs": 0,
+      "average": 6.0,
+      "strike_rate": 40.0
+    }
+  },
+  "matches": [
+    {
+      "opposition": "Chennai Super Kings vs Royal Challengers Bengaluru",
+      "batting": "31(30)",
+      "bowling": "DNB",
+      "format": "T20s",
+      "date": "2025-03-28",
+      "match_url": "https://www.cricket.com/live-score/chennai-super-kings-vs-royal-challengers-bengaluru-match-8-indian-premier-league-2025-257222",
+      "not_out": false,
+      "runs": 31,
+      "balls": 30,
+      "strike_rate": 103.33
+    },
+    {
+      "opposition": "Kolkata Knight Riders vs Royal Challengers Bengaluru",
+      "batting": "59*(36)",
+      "bowling": "DNB",
+      "format": "T20s",
+      "date": "2025-03-22",
+      "match_url": "https://www.cricket.com/live-score/kolkata-knight-riders-vs-royal-challengers-bengaluru-match-1-indian-premier-league-2025-253698",
+      "not_out": true,
+      "runs": 59,
+      "balls": 36,
+      "strike_rate": 163.89
+    },
+    {
+      "opposition": "India vs New Zealand",
+      "batting": "1(2)",
+      "bowling": "DNB",
+      "format": "ODI",
+      "date": "2025-03-09",
+      "match_url": "https://www.cricket.com/live-score/india-vs-new-zealand-final-icc-champions-trophy-2025-255197",
+      "not_out": false,
+      "runs": 1,
+      "balls": 2,
+      "strike_rate": 50.0
+    },
+    {
+      "opposition": "India vs Australia",
+      "batting": "84(98)",
+      "bowling": "DNB",
+      "format": "ODI",
+      "date": "2025-03-04",
+      "match_url": "https://www.cricket.com/live-score/india-vs-australia-1st-semi-final-icc-champions-trophy-2025-255195",
+      "not_out": false,
+      "runs": 84,
+      "balls": 98,
+      "strike_rate": 85.71
+    },
+    {
+      "opposition": "New Zealand vs India",
+      "batting": "11(14)",
+      "bowling": "DNB",
+      "format": "ODI",
+      "date": "2025-03-02",
+      "match_url": "https://www.cricket.com/live-score/new-zealand-vs-india-match-12-icc-champions-trophy-2025-255194",
+      "not_out": false,
+      "runs": 11,
+      "balls": 14,
+      "strike_rate": 78.57
+    },
+    {
+      "opposition": "Pakistan vs India",
+      "batting": "100*(111)",
+      "bowling": "DNB",
+      "format": "ODI",
+      "date": "2025-02-23",
+      "match_url": "https://www.cricket.com/live-score/pakistan-vs-india-match-5-icc-champions-trophy-2025-255187",
+      "not_out": true,
+      "runs": 100,
+      "balls": 111,
+      "strike_rate": 90.09
+    },
+    {
+      "opposition": "Bangladesh vs India",
+      "batting": "22(38)",
+      "bowling": "DNB",
+      "format": "ODI",
+      "date": "2025-02-20",
+      "match_url": "https://www.cricket.com/live-score/bangladesh-vs-india-match-2-icc-champions-trophy-2025-255184",
+      "not_out": false,
+      "runs": 22,
+      "balls": 38,
+      "strike_rate": 57.89
+    },
+    {
+      "opposition": "India vs England",
+      "batting": "52(55)",
+      "bowling": "DNB",
+      "format": "ODI",
+      "date": "2025-02-12",
+      "match_url": "https://www.cricket.com/live-score/india-vs-england-3rd-odi-england-tour-of-india-2025-247158",
+      "not_out": false,
+      "runs": 52,
+      "balls": 55,
+      "strike_rate": 94.55
+    },
+    {
+      "opposition": "India vs England",
+      "batting": "5(8)",
+      "bowling": "DNB",
+      "format": "ODI",
+      "date": "2025-02-09",
+      "match_url": "https://www.cricket.com/live-score/india-vs-england-2nd-odi-england-tour-of-india-2025-247157",
+      "not_out": false,
+      "runs": 5,
+      "balls": 8,
+      "strike_rate": 62.5
+    },
+    {
+      "opposition": "Railways vs Delhi",
+      "batting": "6(15)",
+      "bowling": "DNB",
+      "format": "First-class",
+      "date": "2025-01-30",
+      "match_url": "https://www.cricket.com/live-score/railways-vs-delhi-match-126-ranji-trophy-2024-25-248256",
+      "not_out": false,
+      "runs": 6,
+      "balls": 15,
+      "strike_rate": 40.0
+    }
+  ],
+  "last_updated": "2025-03-29 13:27:58"
+}
