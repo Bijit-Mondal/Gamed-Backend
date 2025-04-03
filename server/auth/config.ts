@@ -1,14 +1,16 @@
-import ThirdParty from "supertokens-node/recipe/thirdparty/index.js";
-import Passwordless from "supertokens-node/recipe/passwordless/index.js";
-import Session from "supertokens-node/recipe/session/index.js";
-import Dashboard from "supertokens-node/recipe/dashboard/index.js";
-import UserRoles from "supertokens-node/recipe/userroles/index.js";
+import ThirdParty from "supertokens-node/recipe/thirdparty";
+import Passwordless from "supertokens-node/recipe/passwordless";
+import Session from "supertokens-node/recipe/session";
+import Dashboard from "supertokens-node/recipe/dashboard";
+import UserRoles from "supertokens-node/recipe/userroles";
 import { appInfo } from "./appInfo";
 import { type TypeInput } from "supertokens-node/types";
 import SuperTokens from "supertokens-node";
 
 export let backendConfig = (): TypeInput => {
     return {
+        framework: "awsLambda",
+        isInServerlessEnv: true,
         supertokens: {
             connectionURI: "https://st-dev-8b0aad20-da7b-11ef-8c4b-53905c1f8f99.aws.supertokens.io",
             apiKey: process.env.NITRO_SUPERTOKENS_API_KEY,
