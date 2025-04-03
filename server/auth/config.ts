@@ -1,6 +1,6 @@
-import ThirdPartyNode from "supertokens-node/recipe/thirdparty/index.js";
-import PasswordlessNode from "supertokens-node/recipe/passwordless/index.js";
-import SessionNode from "supertokens-node/recipe/session/index.js";
+import ThirdParty from "supertokens-node/recipe/thirdparty/index.js";
+import Passwordless from "supertokens-node/recipe/passwordless/index.js";
+import Session from "supertokens-node/recipe/session/index.js";
 import Dashboard from "supertokens-node/recipe/dashboard/index.js";
 import UserRoles from "supertokens-node/recipe/userroles/index.js";
 import { appInfo } from "./appInfo";
@@ -17,7 +17,7 @@ export let backendConfig = (): TypeInput => {
         // recipeList contains all the modules that you want to
         // use from SuperTokens. See the full list here: https://supertokens.com/docs/guides
         recipeList: [
-            ThirdPartyNode.init({
+            ThirdParty.init({
                 signInAndUpFeature: {
                     providers: [
                         // We have provided you with development keys which you can use for testing.
@@ -48,11 +48,11 @@ export let backendConfig = (): TypeInput => {
                     ],
                 },
             }),
-            PasswordlessNode.init({
+            Passwordless.init({
                 contactMethod: "EMAIL_OR_PHONE",
                 flowType: "USER_INPUT_CODE_AND_MAGIC_LINK",
             }),
-            SessionNode.init(),
+            Session.init(),
             Dashboard.init(),
             UserRoles.init(),
         ],
