@@ -7,11 +7,11 @@ export default defineNitroConfig({
     openAPI: true,
     tasks: true
   },
-  //scheduledTasks: {
+  scheduledTasks: {
   //  // Run fantasy tasks every minute
   //  //  '* * * * *': ['fantasy:update-points', 'fantasy:update-points-scorecard']
-  //   //'* * * * *': ['fantasy:update-points']
-  //},
+    '* * * * *': ['fantasy:update-points']
+  },
   openAPI: {
     ui: {
       scalar: {
