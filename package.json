@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "nitro build --preset netlify",
     "dev": "nitro dev",
