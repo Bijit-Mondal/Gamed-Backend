@@ -19,10 +19,5 @@ export default defineNitroConfig({
         theme: 'yellow'
       }
     }
-  },
-  output: {
-    dir: 'dist',
-    publicDir: 'dist/public',
-    serverDir: 'dist/server'
   }
 });

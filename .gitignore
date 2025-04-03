@@ -4,6 +4,7 @@ dist
 .nitro
 .cache
 .output
+.netlify
 .env
 *.log
 *.tmp
