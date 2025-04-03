@@ -5,3 +5,10 @@ dist
 .cache
 .output
 .env
+*.log
+*.tmp
+*.swp
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "nitro build",
+    "build": "nitro build --preset netlify",
     "dev": "nitro dev",
     "prepare": "nitro prepare",
     "preview": "node dist/server/index.mjs",
