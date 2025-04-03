@@ -68,5 +68,3 @@ export function ensureSuperTokensInit() {
         initialized = true;
     }
 }
-
-ensureSuperTokensInit();

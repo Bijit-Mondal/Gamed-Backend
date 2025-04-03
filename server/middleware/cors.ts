@@ -1,4 +1,7 @@
 import SuperTokens from "supertokens-node";
+import { ensureSuperTokensInit } from "../auth/config";
+
+ensureSuperTokensInit();
 
 export default defineEventHandler((event) => {
   const method = getMethod(event);
@@ -14,4 +17,4 @@ export default defineEventHandler((event) => {
     event.node.res.statusCode = 204;
     return '';
   }
-})
+});

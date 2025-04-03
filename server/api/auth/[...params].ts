@@ -3,12 +3,10 @@ import { ensureSuperTokensInit } from "../../auth/config";
 
 ensureSuperTokensInit();
 
-const handleCall = handleAuthAPIRequest();
-
 export default defineEventHandler(async (event) => {
     try {
         const request = await convertToRequest(event);
-        const response = await handleCall(request);
+        const response = await handleAuthAPIRequest()(request);
         return response;
     } catch (err) {
         console.log(err);
