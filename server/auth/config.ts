@@ -58,8 +58,6 @@ export let backendConfig = (): TypeInput => {
             Dashboard.init(),
             UserRoles.init(),
         ],
-        isInServerlessEnv: true,
-        framework: "custom",
     };
 };
 
@@ -70,3 +68,5 @@ export function ensureSuperTokensInit() {
         initialized = true;
     }
 }
+
+ensureSuperTokensInit();
